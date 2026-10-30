@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -263,6 +263,37 @@
       .manual-row { grid-template-columns: 1fr; }
       .card { padding: 18px; }
     }
+  
+    /* Executive Royal MMSS Scanner Polish */
+    .card {
+      border: 2px solid #c8ab75 !important;
+      border-radius: 24px !important;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.48) !important;
+    }
+    .brand-bar {
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1.5px solid #f1eae0;
+    }
+    .brand-title {
+      color: #241718 !important;
+      letter-spacing: -0.3px;
+    }
+    .scanner-box {
+      background: linear-gradient(180deg, #fdfbf7 0%, #f7f1e6 100%) !important;
+      border: 1.5px solid #e2d5be !important;
+      border-radius: 18px !important;
+    }
+    .btn {
+      border-radius: 13px !important;
+      font-weight: 800 !important;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      transition: all 0.2s ease;
+    }
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
   </style>
 </head>
 <body>
@@ -379,10 +410,10 @@
 
       <!-- STEP 3: MANUAL SERIAL SEARCH -->
       <div class="manual-section" id="manualSearch">
-        <strong style="font-size:0.95rem;color:#0f172a;">3. Manual Serial Number Check-In</strong>
-        <p class="hint" style="margin:2px 0 8px;font-size:0.8rem;">Enter the 4-digit Serial ID printed on the ticket (e.g. 0001) or full QR payload.</p>
+        <strong style="font-size:0.95rem;color:#0f172a;">3. Manual Check-In (by Serial ID, Student ID, or Name)</strong>
+        <p class="hint" style="margin:2px 0 8px;font-size:0.8rem;">Enter the 4-digit Serial ID (e.g. 0042), University/National ID, or Student Name for emergency gate lookup.</p>
         <div class="manual-row">
-          <input class="input-ctrl" id="serialInput" inputmode="text" placeholder="Enter Serial ID (e.g. 0042)" autocomplete="off" />
+          <input class="input-ctrl" id="serialInput" inputmode="text" placeholder="Serial ID (0042), Student ID, or Name..." autocomplete="off" />
           <button class="btn" id="serialSearchButton" type="button" style="width:auto;min-width:175px;">Search &amp; Check In</button>
         </div>
       </div>
@@ -1366,4 +1397,4 @@
     resumeSession();
   </script>
 </body>
-</html>
+</html> 
