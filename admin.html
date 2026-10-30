@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MMSS Admin Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
@@ -340,6 +340,93 @@
       background: #f8fafc;
       border: 1px dashed #cbd5e1;
     }
+
+    /* Ultra-Professional Royal MMSS Design System Polish */
+    #pinScreen {
+      background:
+        radial-gradient(circle at 18% 15%, rgba(200, 171, 117, 0.22) 0%, transparent 40%),
+        linear-gradient(155deg, #140c0d 0%, #381112 52%, #7b1f20 100%) !important;
+    }
+    .pin-card {
+      border: 2px solid #c8ab75 !important;
+      border-radius: 26px !important;
+      box-shadow: 0 30px 75px rgba(0, 0, 0, 0.52) !important;
+      padding: 40px 34px !important;
+    }
+    .pin-card h2 {
+      font-family: 'Playfair Display', Georgia, serif !important;
+      color: #241718 !important;
+      font-weight: 800 !important;
+    }
+    .btn-pin, .btn-mmss {
+      background: linear-gradient(135deg, #7b1f20 0%, #4a1213 100%) !important;
+      border: 1.5px solid #c8ab75 !important;
+      color: #f5ebd6 !important;
+      border-radius: 13px !important;
+      box-shadow: 0 10px 24px rgba(123, 31, 32, 0.28) !important;
+      transition: all 0.2s ease !important;
+    }
+    .btn-pin:hover, .btn-mmss:hover {
+      background: linear-gradient(135deg, #8f2426 0%, #551617 100%) !important;
+      color: #ffffff !important;
+      transform: translateY(-1px);
+    }
+    .sidebar {
+      background: linear-gradient(180deg, #180f10 0%, #2a1213 60%, #3d1213 100%) !important;
+      border-right: 1.5px solid rgba(200, 171, 117, 0.35) !important;
+      box-shadow: 6px 0 28px rgba(0, 0, 0, 0.22) !important;
+    }
+    .sidebar-logo {
+      border-bottom: 1px solid rgba(200, 171, 117, 0.25) !important;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .sidebar-logo .brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      color: #f5ebd6 !important;
+      letter-spacing: 0.3px;
+    }
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(123, 31, 32, 0.92), rgba(74, 18, 19, 0.75)) !important;
+      color: #f5ebd6 !important;
+      border-left: 4px solid #c8ab75 !important;
+      font-weight: 700 !important;
+    }
+    .topbar {
+      background: rgba(255, 255, 255, 0.96) !important;
+      backdrop-filter: blur(12px);
+      border-bottom: 1.5px solid #e6dcc8 !important;
+      box-shadow: 0 4px 18px rgba(24, 15, 16, 0.04);
+    }
+    .topbar h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      color: #241718 !important;
+      font-weight: 800 !important;
+    }
+    .panel-card {
+      border: 1.5px solid #e6dcc8 !important;
+      border-radius: 18px !important;
+      box-shadow: 0 12px 32px rgba(24, 15, 16, 0.06) !important;
+      overflow: hidden;
+    }
+    .panel-card-header {
+      background: linear-gradient(90deg, #fcf9f4 0%, #f5efe4 100%) !important;
+      border-bottom: 1.5px solid #e6dcc8 !important;
+      color: #241718 !important;
+      font-weight: 800 !important;
+    }
+    .data-table thead th {
+      background: #241718 !important;
+      color: #f5ebd6 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.8px !important;
+      text-transform: uppercase !important;
+      padding: 13px 14px !important;
+      border-bottom: 2px solid #c8ab75 !important;
+    }
+    .data-table tbody tr:hover {
+      background-color: #fdfaf5 !important;
+    }
+
 </style>
 </head>
 <body>
@@ -400,6 +487,9 @@
     <div class="topbar">
       <h1 id="tabTitle">Dashboard &amp; Batch Analytics</h1>
       <div class="d-flex align-items-center gap-2 flex-wrap">
+        <button type="button" class="btn btn-sm fw-bold" id="organizeSheetTopBtn" onclick="triggerOrganizeGoogleSheet(this)" style="border-radius:8px;font-size:0.78rem;background:linear-gradient(135deg,#7b1f20,#4a1213);color:#f5ebd6;border:1px solid #c8ab75;" title="Reorder columns logically, apply status color coding, fix widths, and hide technical columns in Google Sheets">
+          ✨ Organize Google Sheet
+        </button>
         <button type="button" class="btn btn-sm btn-outline-dark fw-bold" onclick="toggleConnectionPanel()" style="border-radius:8px;font-size:0.78rem;">
           🔗 Links &amp; API Status <span id="topConnDot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#94a3b8;margin-left:4px;"></span>
         </button>
@@ -567,6 +657,9 @@
             <div class="d-flex gap-2 flex-wrap align-items-center">
               <button type="button" class="btn btn-sm btn-success fw-bold" id="bulkVerifyBtn" onclick="bulkVerifySelectedRows()" style="display:none;">
                 ✓ Verify Selected (<span id="bulkVerifyCount">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-warning text-dark fw-bold" onclick="triggerAutoVerifyMatched(this)" title="Automatically verify all Pending students whose InstaPay Reference matches the Receiver Form log">
+                ⚡ Auto-Verify Matched
               </button>
               <input type="text" id="searchInput" class="form-control form-control-sm"
                      placeholder="Search name / ID / phone / ref..." style="width:230px;"
@@ -768,10 +861,18 @@
                     <label class="form-label fw-bold">Google Slides / Drive Image Template URL or ID</label>
                     <div class="input-group">
                       <input type="text" class="form-control font-monospace" id="customSlideIdInput" placeholder="Paste Google Slides or Image URL / ID..." />
-                      <button class="btn btn-dark fw-bold" type="button" onclick="saveDispatcherTemplateToEvent(this)" title="Save this template for the active event">💾 Save for Event</button>
+                      <button class="btn btn-dark fw-bold" type="button" onclick="saveDispatcherTemplateToEvent(this)" title="Save this template for the active event">💾 Save</button>
                     </div>
-                    <div class="form-text">
-                      Supported tags: <code>&lt;&lt;Name&gt;&gt;</code> (or <code>{{Name}}</code>), <code>&lt;&lt;Serial&gt;&gt;</code>, <code>&lt;&lt;ID&gt;&gt;</code>, <code>&lt;&lt;Batch&gt;&gt;</code>, <code>&lt;&lt;EventName&gt;&gt;</code>, and <code>&lt;&lt;QR&gt;&gt;</code> (or any box/image titled <code>QR</code> — auto-centered as a 1:1 square QR).
+                    <div class="d-flex gap-2 flex-wrap mt-2">
+                      <button type="button" class="btn btn-sm fw-bold" style="background:#7b1f20;color:#f5ebd6;border:1px solid #c8ab75;" onclick="triggerAutoCreateSlideTemplate(this)">
+                        ✨ Auto-Create Ready Google Slide
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-primary fw-bold" onclick="triggerTestSamplePdf(this)">
+                        🧪 Generate &amp; Open Test PDF
+                      </button>
+                    </div>
+                    <div class="form-text mt-1">
+                      Supported tags: <code>QR</code> or <code>&lt;&lt;QR&gt;&gt;</code> inside a box, plus <code>&lt;&lt;Name&gt;&gt;</code>, <code>&lt;&lt;Serial&gt;&gt;</code>, <code>&lt;&lt;ID&gt;&gt;</code>, <code>&lt;&lt;Batch&gt;&gt;</code>.
                     </div>
                   </div>
                 </div>
@@ -1288,6 +1389,51 @@
   </div>
 </div>
 
+<!-- ==================== EDIT STUDENT DETAILS MODAL ==================== -->
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-white" style="background:linear-gradient(135deg,#241718,#7b1f20);">
+        <h5 class="modal-title fw-bold">✏️ Edit Attendee Registration Details</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="editAttRowIndex" value="" />
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Full Name</label>
+          <input type="text" class="form-control" id="editAttName" />
+        </div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label small fw-bold">University / National ID</label>
+            <input type="text" class="form-control font-monospace" id="editAttStudentId" />
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-bold">Batch / Year</label>
+            <input type="text" class="form-control" id="editAttBatch" />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-bold">WhatsApp Phone Number (with Country Code)</label>
+          <input type="text" class="form-control font-monospace" id="editAttPhone" placeholder="+2010... or +6012..." />
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Email Address</label>
+          <input type="email" class="form-control" id="editAttEmail" />
+        </div>
+        <div class="mb-2">
+          <label class="form-label small fw-bold">InstaPay Reference ID</label>
+          <input type="text" class="form-control font-monospace" id="editAttRef" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold" id="saveAttEditBtn" onclick="saveAttendeeEdits()">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== ACTION CONFIRMATION MODAL ==================== -->
 <div class="modal fade" id="actionConfirmModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -1643,6 +1789,28 @@
     }
   }
 
+  function triggerOrganizeGoogleSheet(btn) {
+    var origText = btn ? btn.innerHTML : '✨ Organize Google Sheet';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Organizing Sheet...';
+    }
+    sessionRun('admin')
+      .withSuccessHandler(function(res) {
+        if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+        if (res && res.success) {
+          toast('✅ ' + (res.message || 'Google Sheet columns reordered, colored & formatted!'), 'success');
+        } else {
+          toast('Error: ' + ((res && res.error) || 'Could not format sheet'), 'error');
+        }
+      })
+      .withFailureHandler(function(err) {
+        if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+        toast('Error organizing sheet: ' + err.message, 'error');
+      })
+      .organizeAndBeautifyAllSheets('');
+  }
+
   function copyCleanScriptUrl() {
     var clean = sanitizeAdminGasUrl(activeAdminGasUrl);
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1803,6 +1971,16 @@
             setTimeout(function() { okCb({ success: true, regenerated: (rows || []).length, errors: [] }); }, 250);
           });
         },
+        createStarterSlideTemplate: function(evId) {
+          callAdminGasApi('createStarterSlideTemplate', { eventId: evId || '', token: token }, okCb, errCb, function() {
+            setTimeout(function() { okCb({ success: true, slideId: '1StarterSlideTemplateDemoId', editUrl: 'https://docs.google.com/presentation/', message: 'Created starter Google Slide template!' }); }, 250);
+          });
+        },
+        generateSampleTicketPreviewPdf: function(evId, style, slideId) {
+          callAdminGasApi('generateSampleTicketPreviewPdf', { eventId: evId || '', templateStyle: style || 'mmss_logo', slideTemplateId: slideId || '', token: token }, okCb, errCb, function() {
+            setTimeout(function() { okCb({ success: true, pdfUrl: 'https://drive.google.com/', message: 'Sample PDF generated!' }); }, 250);
+          });
+        },
         updatePaymentStatus: function(evId, rowIndex, newStatus) {
           callAdminGasApi('updatePaymentStatus', { eventId: evId, rowIndex: rowIndex, newStatus: newStatus, token: token }, okCb, errCb, function() {
             setTimeout(function() { okCb({ success: true }); }, 150);
@@ -1811,6 +1989,21 @@
         bulkUpdatePaymentStatus: function(evId, rowIndexes, newStatus) {
           callAdminGasApi('bulkUpdatePaymentStatus', { eventId: evId, rowIndexes: JSON.stringify(rowIndexes || []), newStatus: newStatus || 'Verified', token: token }, okCb, errCb, function() {
             setTimeout(function() { okCb({ success: true, updatedCount: (rowIndexes || []).length }); }, 200);
+          });
+        },
+        autoVerifyMatchedPayments: function(evId) {
+          callAdminGasApi('autoVerifyMatchedPayments', { eventId: evId, token: token }, okCb, errCb, function() {
+            setTimeout(function() { okCb({ success: true, verifiedCount: 2, message: 'Auto-verified matched pending registrations!' }); }, 200);
+          });
+        },
+        updateAttendeeDetails: function(evId, rowIndex, updates) {
+          callAdminGasApi('updateAttendeeDetails', { eventId: evId, rowIndex: rowIndex, updates: JSON.stringify(updates || {}), token: token }, okCb, errCb, function() {
+            setTimeout(function() { okCb({ success: true, message: 'Attendee details updated!' }); }, 150);
+          });
+        },
+        deleteEventPermanently: function(evId) {
+          callAdminGasApi('deleteEventPermanently', { eventId: evId, token: token }, okCb, errCb, function() {
+            setTimeout(function() { okCb({ success: true, message: 'Event deleted!' }); }, 150);
           });
         },
         rejectPayment: function(evId, rowIndex, reason) {
@@ -1862,6 +2055,11 @@
           callAdminGasApi('adminCheckInAttendee', { eventId: evId, serial: serial, staffName: staff, token: token }, okCb, errCb, function() {
             setTimeout(function() { okCb({ status: 'SUCCESS', attendee: { name: 'Dr. Ahmed Mohamed', serial: serial, batch: 'Year 4', checkInBy: staff } }); }, 150);
           });
+        },
+        organizeAndBeautifyAllSheets: function(evId) {
+          callAdminGasApi('organizeAndBeautifySheets', { eventId: evId || '', token: token }, okCb, errCb, function() {
+            setTimeout(function() { okCb({ success: true, organizedCount: 1, message: 'Organized & formatted Google Sheet columns and colors!' }); }, 200);
+          });
         }
       };
       return bridge;
@@ -1898,6 +2096,7 @@
   var selectedRecipientRows = {};
 
   var confirmModal = null;
+  var editStudentModal = null;
   var pendingConfirmCallback = null;
   var waSendersList = [
     { id: '106912', ownerName: 'Main Organizer', phoneHint: '', active: true, hasToken: true, tokenMask: 'Amhf••••ecdd' }
@@ -1915,6 +2114,7 @@
     previewModal = new bootstrap.Modal(document.getElementById('ticketPreviewModal'));
     receiptModal = new bootstrap.Modal(document.getElementById('receiptViewModal'));
     confirmModal = new bootstrap.Modal(document.getElementById('actionConfirmModal'));
+    editStudentModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
     document.getElementById('actionConfirmOkBtn').addEventListener('click', function() {
       confirmModal.hide();
       if (typeof pendingConfirmCallback === 'function') {
@@ -2009,6 +2209,56 @@
       styleSel.value = fSet.ticketTemplateStyle;
       document.getElementById('customSlideWrap').style.display = (styleSel.value === 'custom_slides') ? 'block' : 'none';
     }
+  }
+
+
+  function triggerAutoCreateSlideTemplate(btn) {
+    var orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Creating Slide in Drive...';
+    sessionRun('admin')
+      .withSuccessHandler(function(res) {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+        if (res && res.success && res.slideId) {
+          document.getElementById('customSlideIdInput').value = res.slideId;
+          toast('✅ Created ready Google Slides template! Opening editor...', 'success');
+          if (res.editUrl) window.open(res.editUrl, '_blank', 'noopener');
+        } else {
+          toast('Error: ' + ((res && res.error) || 'Could not create template'), 'error');
+        }
+      })
+      .withFailureHandler(function(err) {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+        toast('Error: ' + err.message, 'error');
+      })
+      .createStarterSlideTemplate(selectedEventId);
+  }
+
+  function triggerTestSamplePdf(btn) {
+    var styleVal = document.getElementById('dispatchTemplateStyle').value;
+    var slideVal = document.getElementById('customSlideIdInput').value.trim();
+    var orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Generating Real PDF...';
+    sessionRun('admin')
+      .withSuccessHandler(function(res) {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+        if (res && res.success && res.pdfUrl) {
+          toast('✅ Sample Ticket PDF generated! Opening in new tab...', 'success');
+          window.open(res.pdfUrl, '_blank', 'noopener');
+        } else {
+          toast('Error: ' + ((res && res.error) || 'Could not generate sample PDF'), 'error');
+        }
+      })
+      .withFailureHandler(function(err) {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+        toast('Error: ' + err.message, 'error');
+      })
+      .generateSampleTicketPreviewPdf(selectedEventId, styleVal, slideVal);
   }
 
   function saveDispatcherTemplateToEvent(btn) {
@@ -2113,9 +2363,10 @@
                 '<button class="btn btn-sm btn-primary fw-bold" onclick="editEventForm(\'' + ev.id + '\')" title="Open visual form editor with all questions & answers">✏️ Edit Form &amp; Questions</button>' +
                 '<a class="btn btn-sm btn-outline-success fw-bold" href="' + escHtml(buildReceiverUrlForEvent(ev)) + '" target="_blank" rel="noopener" title="Open this event’s payment receiver form">💰 Receiver Form</a>' +
                 '<button class="btn btn-sm btn-outline-secondary" onclick="copyReceiverFormLink(\'' + ev.id + '\')" title="Copy event-specific receiver form link">🔗 Copy Receiver Link</button>' +
-                '<button class="btn btn-sm ' + (isActive ? 'btn-outline-danger' : 'btn-outline-success') + '" onclick="toggleEvent(\'' + ev.id + '\', ' + !isActive + ')">' +
+                '<button class="btn btn-sm ' + (isActive ? 'btn-outline-warning text-dark' : 'btn-outline-success') + '" onclick="toggleEvent(\'' + ev.id + '\', ' + !isActive + ')">' +
                   (isActive ? 'Deactivate' : 'Activate') +
                 '</button>' +
+                '<button class="btn btn-sm btn-outline-danger" onclick="deleteEventConfirm(\'' + ev.id + '\', \'' + escHtml(ev.name).replace(/'/g, "\\'") + '\')" title="Delete Event">🗑️ Delete</button>' +
               '</div>' +
             '</td>' +
           '</tr>';
@@ -2160,6 +2411,102 @@
     try { document.execCommand('copy'); toast('Link copied to clipboard!', 'success'); }
     catch (e) { toast('Link: ' + text, 'success'); }
     document.body.removeChild(ta);
+  }
+
+
+  function triggerAutoVerifyMatched(btn) {
+    if (!selectedEventId) { toast('Please select an active event first.', 'error'); return; }
+    var orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Matching...';
+    sessionRun('admin')
+      .withSuccessHandler(function(res) {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+        if (res && res.success) {
+          toast('✅ ' + (res.message || ('Auto-verified ' + (res.verifiedCount || 0) + ' matched students!')), 'success');
+          loadSubmissions();
+        } else {
+          toast('Error: ' + ((res && res.error) || 'Could not auto-verify'), 'error');
+        }
+      })
+      .withFailureHandler(function(err) {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+        toast('Error: ' + err.message, 'error');
+      })
+      .autoVerifyMatchedPayments(selectedEventId);
+  }
+
+  function openEditStudentModal(rowIndex) {
+    var row = allSubmissions.find(function(r) { return Number(r.rowIndex) === Number(rowIndex); });
+    if (!row) return;
+    document.getElementById('editAttRowIndex').value = String(row.rowIndex);
+    document.getElementById('editAttName').value = row['Full_Name'] || '';
+    document.getElementById('editAttStudentId').value = row['Student_ID'] || row['Student ID'] || row['University ID'] || '';
+    document.getElementById('editAttBatch').value = row['Batch'] || '';
+    document.getElementById('editAttPhone').value = row['Phone'] || '';
+    document.getElementById('editAttEmail').value = row['Email'] || '';
+    document.getElementById('editAttRef').value = row['InstaPay_Ref'] || '';
+    if (editStudentModal) editStudentModal.show();
+  }
+
+  function saveAttendeeEdits() {
+    var rowIndex = Number(document.getElementById('editAttRowIndex').value);
+    if (!rowIndex || !selectedEventId) return;
+    var updates = {
+      fullName: document.getElementById('editAttName').value.trim(),
+      studentId: document.getElementById('editAttStudentId').value.trim(),
+      batch: document.getElementById('editAttBatch').value.trim(),
+      phone: document.getElementById('editAttPhone').value.trim(),
+      email: document.getElementById('editAttEmail').value.trim(),
+      instaPayRef: document.getElementById('editAttRef').value.replace(/\D/g, '').trim()
+    };
+    var btn = document.getElementById('saveAttEditBtn');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+    sessionRun('admin')
+      .withSuccessHandler(function(res) {
+        btn.disabled = false;
+        btn.textContent = '💾 Save Changes';
+        if (res && res.success) {
+          if (editStudentModal) editStudentModal.hide();
+          toast('✅ Student details updated successfully!', 'success');
+          loadSubmissions();
+        } else {
+          toast('Error: ' + ((res && res.error) || 'Update failed'), 'error');
+        }
+      })
+      .withFailureHandler(function(err) {
+        btn.disabled = false;
+        btn.textContent = '💾 Save Changes';
+        toast('Error: ' + err.message, 'error');
+      })
+      .updateAttendeeDetails(selectedEventId, rowIndex, updates);
+  }
+
+  function deleteEventConfirm(evId, evName) {
+    askConfirmation(
+      'Delete Event from Catalog',
+      'Are you sure you want to remove <strong>' + escHtml(evName) + '</strong> (<code>' + escHtml(evId) + '</code>) from the event catalog?',
+      function() {
+        sessionRun('admin')
+          .withSuccessHandler(function(res) {
+            if (res && res.success) {
+              if (selectedEventId === evId) selectedEventId = '';
+              if (editingEventId === evId) cancelEditForm();
+              toast('🗑️ Removed event ' + evName + '.', 'success');
+              loadAllEvents();
+            } else {
+              toast('Error: ' + ((res && res.error) || 'Could not delete event'), 'error');
+            }
+          })
+          .withFailureHandler(function(err) {
+            toast('Error: ' + err.message, 'error');
+          })
+          .deleteEventPermanently(evId);
+      }
+    );
   }
 
   function toggleEvent(evId, newActive) {
@@ -2743,7 +3090,7 @@
       tr.innerHTML =
         '<td>' + checkCellHtml + '</td>' +
         '<td><code class="fw-bold">' + escHtml(row['Serial_ID'] || '') + '</code></td>' +
-        '<td><strong>' + escHtml(row['Full_Name'] || '') + '</strong>' + (stIdVal ? '<div class="text-muted font-monospace" style="font-size:0.75rem;">🪪 ID: ' + escHtml(stIdVal) + '</div>' : '') + '</td>' +
+        '<td><div class="d-flex align-items-center justify-content-between gap-1"><strong>' + escHtml(row['Full_Name'] || '') + '</strong><button type="button" class="btn btn-sm btn-light border py-0 px-1" style="font-size:0.7rem;" onclick="openEditStudentModal(' + row.rowIndex + ')" title="Edit student details">✏️</button></div>' + (stIdVal ? '<div class="text-muted font-monospace" style="font-size:0.75rem;">🪪 ID: ' + escHtml(stIdVal) + '</div>' : '') + '</td>' +
         '<td class="small"><div>' + escHtml(row['Email'] || '') + '</div>' + phoneInfo.html + '</td>' +
         '<td class="small">' + escHtml(row['Batch'] || '—') + '</td>' +
         '<td><code class="small">' + escHtml(row['InstaPay_Ref'] || '') + '</code></td>' +
