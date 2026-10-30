@@ -1141,109 +1141,179 @@
                 </div>
               </div>
 
-              <!-- CARD 2: VISUAL CORE QUESTIONS EDITOR (EDIT IN PLACE LIKE GOOGLE FORMS!) -->
-              <div class="d-flex justify-content-between align-items-center my-3 px-1">
-                <span class="fw-bold text-uppercase" style="color:#f5ebd6;letter-spacing:1px;font-size:0.8rem;">2. Core Student Questions (Click any title or answer list to edit)</span>
-              </div>
-
-              <!-- Question: Full Name -->
-              <div class="vf-card" id="vfCard_fullName">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_fullName" value="Full Name (English or Arabic)" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_fullName" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_fullName" checked onchange="toggleVfCardVisual('fullName')" /> Show</label>
+              <!-- SECTION TITLES & GROUPING CUSTOMIZER -->
+              <div class="vf-card mt-3" style="background:#fdf8f6;border-color:#c8ab75;">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                  <span class="badge" style="background:#241718;color:#c8ab75;font-size:0.75rem;">📂 FORM SECTIONS &amp; GROUPING TITLES</span>
+                  <span class="small text-muted fw-bold">Customize how the form is divided into sections</span>
+                </div>
+                <div class="row g-2">
+                  <div class="col-md-6">
+                    <label class="small fw-bold text-muted mb-1">Section 2 Title (Default: Student Identity &amp; Contact)</label>
+                    <input type="text" class="form-control form-control-sm fw-bold" id="evtStep2Title" value="Student Identity & Contact" />
                   </div>
-                </div>
-                <div class="vf-preview-box">
-                  <input type="text" class="form-control form-control-sm bg-white" disabled placeholder="Student types their full name here..." />
-                </div>
-              </div>
-
-              <!-- Question: Student / National ID -->
-              <div class="vf-card" id="vfCard_studentId">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_studentId" value="University / National ID (Unique per Student)" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_studentId" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_studentId" checked onchange="toggleVfCardVisual('studentId')" /> Show</label>
+                  <div class="col-md-6">
+                    <label class="small fw-bold text-muted mb-1">Section 2 Subtitle</label>
+                    <input type="text" class="form-control form-control-sm" id="evtStep2Sub" value="Each Student ID and WhatsApp number can only register once per event" />
                   </div>
-                </div>
-                <div class="vf-preview-box">
-                  <input type="text" class="form-control form-control-sm bg-white font-monospace" disabled placeholder="Unique Student / National ID (Duplicate IDs automatically blocked)" />
+                  <div class="col-md-6 mt-2">
+                    <label class="small fw-bold text-muted mb-1">Section 3 Title (Default: Payment Reference &amp; Screenshot)</label>
+                    <input type="text" class="form-control form-control-sm fw-bold" id="evtStep3Title" value="Payment Reference & Screenshot" />
+                  </div>
+                  <div class="col-md-6 mt-2">
+                    <label class="small fw-bold text-muted mb-1">Section 3 Subtitle</label>
+                    <input type="text" class="form-control form-control-sm" id="evtStep3Sub" value="Enter your unique InstaPay Reference ID and attach your transfer receipt" />
+                  </div>
                 </div>
               </div>
 
-              <!-- Question: Personal Email -->
-              <div class="vf-card" id="vfCard_email">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_email" value="Personal Email (to receive official Ticket PDF)" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_email" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_email" checked onchange="toggleVfCardVisual('email')" /> Show</label>
-                  </div>
-                </div>
-                <div class="vf-preview-box">
-                  <input type="email" class="form-control form-control-sm bg-white" disabled placeholder="student@mans.edu.eg" />
-                </div>
+              <!-- CARD 2: VISUAL CORE QUESTIONS EDITOR (REORDERABLE + SECTION ASSIGNMENT!) -->
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 my-3 px-1">
+                <span class="fw-bold text-uppercase" style="color:#f5ebd6;letter-spacing:1px;font-size:0.8rem;">2. Built-In Core Questions (Use ▲ / ▼ to reorder or change Section)</span>
               </div>
 
-              <!-- Question: WhatsApp Phone Number -->
-              <div class="vf-card" id="vfCard_phone">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_phone" value="WhatsApp Mobile Number (Egyptian or International — Unique per Student)" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_phone" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_phone" checked onchange="toggleVfCardVisual('phone')" /> Show</label>
+              <div id="coreQuestionsSortableList">
+                <!-- Question: Full Name -->
+                <div class="vf-card core-q-card" id="vfCard_fullName" data-core-key="fullName">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_fullName" value="Full Name (English or Arabic)" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_fullName" style="width:auto;font-size:0.75rem;">
+                        <option value="2" selected>📂 Section 2</option>
+                        <option value="3">📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('fullName', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('fullName', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_fullName" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_fullName" checked onchange="toggleVfCardVisual('fullName')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box">
+                    <input type="text" class="form-control form-control-sm bg-white" disabled placeholder="Student types their full name here..." />
                   </div>
                 </div>
-                <div class="vf-preview-box d-flex gap-2">
-                  <span class="badge bg-light text-dark border p-2">🇪🇬 +20 / 🇲🇾 +60 / 🇸🇦 +966 ...</span>
-                  <input type="text" class="form-control form-control-sm bg-white font-monospace" disabled placeholder="Unique WhatsApp number (Duplicates blocked)" />
-                </div>
-              </div>
 
-              <!-- Question: Batch / Academic Year (WITH EDITABLE CHOICES!) -->
-              <div class="vf-card" id="vfCard_batch">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_batch" value="Batch / Academic Year" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_batch" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_batch" checked onchange="toggleVfCardVisual('batch')" /> Show</label>
+                <!-- Question: Student / National ID -->
+                <div class="vf-card core-q-card" id="vfCard_studentId" data-core-key="studentId">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_studentId" value="University / National ID (Unique per Student)" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_studentId" style="width:auto;font-size:0.75rem;">
+                        <option value="2" selected>📂 Section 2</option>
+                        <option value="3">📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('studentId', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('studentId', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_studentId" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_studentId" checked onchange="toggleVfCardVisual('studentId')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box">
+                    <input type="text" class="form-control form-control-sm bg-white font-monospace" disabled placeholder="Unique Student / National ID (Duplicate IDs automatically blocked)" />
                   </div>
                 </div>
-                <div class="vf-preview-box">
-                  <label class="small fw-bold text-muted d-block mb-1">✏️ Answer Choices for Batch Dropdown (comma-separated — add or remove any batch):</label>
-                  <input type="text" class="form-control form-control-sm bg-white fw-semibold" id="coreBatchOptionsInput" value="Year 1, Year 2, Year 3, Year 4, Year 5, Intern 1, Intern 2" oninput="renderBatchPreviewPills()" />
-                  <div id="coreBatchPillsPreview" class="d-flex flex-wrap gap-1 mt-2"></div>
-                </div>
-              </div>
 
-              <!-- Question: InstaPay Reference ID -->
-              <div class="vf-card" id="vfCard_instaPayRef">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_instaPayRef" value="InstaPay Reference ID (Unique per Transaction)" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_instaPayRef" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_instaPayRef" checked onchange="toggleVfCardVisual('instaPayRef')" /> Show</label>
+                <!-- Question: Personal Email -->
+                <div class="vf-card core-q-card" id="vfCard_email" data-core-key="email">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_email" value="Personal Email (to receive official Ticket PDF)" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_email" style="width:auto;font-size:0.75rem;">
+                        <option value="2" selected>📂 Section 2</option>
+                        <option value="3">📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('email', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('email', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_email" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_email" checked onchange="toggleVfCardVisual('email')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box">
+                    <input type="email" class="form-control form-control-sm bg-white" disabled placeholder="student@mans.edu.eg" />
                   </div>
                 </div>
-                <div class="vf-preview-box">
-                  <input type="text" class="form-control form-control-sm bg-white font-monospace" disabled placeholder="Numeric InstaPay Reference (Duplicate references blocked)" />
-                </div>
-              </div>
 
-              <!-- Question: Payment Proof Screenshot -->
-              <div class="vf-card" id="vfCard_paymentProof">
-                <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                  <input type="text" class="vf-question-input" id="coreLabel_paymentProof" value="InstaPay Payment Screenshot" />
-                  <div class="d-flex align-items-center gap-3 flex-shrink-0">
-                    <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_paymentProof" checked /> Required</label>
-                    <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_paymentProof" checked onchange="toggleVfCardVisual('paymentProof')" /> Show</label>
+                <!-- Question: WhatsApp Phone Number -->
+                <div class="vf-card core-q-card" id="vfCard_phone" data-core-key="phone">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_phone" value="WhatsApp Mobile Number (Egyptian or International — Unique per Student)" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_phone" style="width:auto;font-size:0.75rem;">
+                        <option value="2" selected>📂 Section 2</option>
+                        <option value="3">📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('phone', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('phone', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_phone" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_phone" checked onchange="toggleVfCardVisual('phone')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box d-flex gap-2">
+                    <span class="badge bg-light text-dark border p-2">🇪🇬 +20 / 🇲🇾 +60 / 🇸🇦 +966 ...</span>
+                    <input type="text" class="form-control form-control-sm bg-white font-monospace" disabled placeholder="Unique WhatsApp number (Duplicates blocked)" />
                   </div>
                 </div>
-                <div class="vf-preview-box text-center text-muted small py-2">
-                  📸 Student uploads their InstaPay transfer screenshot here
+
+                <!-- Question: Batch / Academic Year -->
+                <div class="vf-card core-q-card" id="vfCard_batch" data-core-key="batch">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_batch" value="Batch / Academic Year" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_batch" style="width:auto;font-size:0.75rem;">
+                        <option value="2" selected>📂 Section 2</option>
+                        <option value="3">📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('batch', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('batch', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_batch" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_batch" checked onchange="toggleVfCardVisual('batch')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box">
+                    <label class="small fw-bold text-muted d-block mb-1">✏️ Answer Choices for Batch Dropdown (comma-separated — add or remove any batch):</label>
+                    <input type="text" class="form-control form-control-sm bg-white fw-semibold" id="coreBatchOptionsInput" value="Year 1, Year 2, Year 3, Year 4, Year 5, Intern 1, Intern 2" oninput="renderBatchPreviewPills()" />
+                    <div id="coreBatchPillsPreview" class="d-flex flex-wrap gap-1 mt-2"></div>
+                  </div>
+                </div>
+
+                <!-- Question: InstaPay Reference ID -->
+                <div class="vf-card core-q-card" id="vfCard_instaPayRef" data-core-key="instaPayRef">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_instaPayRef" value="InstaPay Reference ID (Unique per Transaction)" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_instaPayRef" style="width:auto;font-size:0.75rem;">
+                        <option value="2">📂 Section 2</option>
+                        <option value="3" selected>📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('instaPayRef', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('instaPayRef', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_instaPayRef" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_instaPayRef" checked onchange="toggleVfCardVisual('instaPayRef')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box">
+                    <input type="text" class="form-control form-control-sm bg-white font-monospace" disabled placeholder="Numeric InstaPay Reference (Duplicate references blocked)" />
+                  </div>
+                </div>
+
+                <!-- Question: Payment Proof Screenshot -->
+                <div class="vf-card core-q-card" id="vfCard_paymentProof" data-core-key="paymentProof">
+                  <div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">
+                    <input type="text" class="vf-question-input flex-grow-1" style="width:auto;min-width:220px;" id="coreLabel_paymentProof" value="InstaPay Payment Screenshot" />
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <select class="form-select form-select-sm fw-semibold" id="coreSec_paymentProof" style="width:auto;font-size:0.75rem;">
+                        <option value="2">📂 Section 2</option>
+                        <option value="3" selected>📂 Section 3</option>
+                      </select>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('paymentProof', -1)" title="Move Question Up">▲</button>
+                      <button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveCoreQuestion('paymentProof', 1)" title="Move Question Down">▼</button>
+                      <label class="small fw-bold text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreReq_paymentProof" checked /> Required</label>
+                      <label class="small fw-bold text-success text-nowrap mb-0"><input type="checkbox" class="form-check-input me-1" id="coreShow_paymentProof" checked onchange="toggleVfCardVisual('paymentProof')" /> Show</label>
+                    </div>
+                  </div>
+                  <div class="vf-preview-box text-center text-muted small py-2">
+                    📸 Student uploads their InstaPay transfer screenshot here
+                  </div>
                 </div>
               </div>
 
@@ -1251,9 +1321,10 @@
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 my-3 px-1">
                 <span class="fw-bold text-uppercase" style="color:#f5ebd6;letter-spacing:1px;font-size:0.8rem;">3. Extra Custom Questions (Add or remove questions below)</span>
                 <div class="d-flex gap-2 flex-wrap">
+                  <button type="button" class="btn btn-sm fw-bold" style="background:#ffffff;color:#241718;border-radius:999px;" onclick="addField('section')">📑 Add Section Divider / Group</button>
                   <button type="button" class="btn btn-sm fw-bold" style="background:#c8ab75;color:#1d1112;border-radius:999px;" onclick="addField('text')">➕ Add Text Question</button>
                   <button type="button" class="btn btn-sm fw-bold" style="background:#f5ebd6;color:#7b1f20;border-radius:999px;" onclick="addField('choice')">➕ Add Multiple-Choice Question</button>
-                  <button type="button" class="btn btn-sm btn-outline-light fw-bold" style="border-radius:999px;" onclick="addField('image')">➕ Add Image Upload Question</button>
+                  <button type="button" class="btn btn-sm btn-outline-light fw-bold" style="border-radius:999px;" onclick="addField('image')">➕ Add Image Upload</button>
                 </div>
               </div>
 
@@ -2522,6 +2593,29 @@
   // ==================== VISUAL LIVE FORM EDITOR FUNCTIONS ====================
   var coreFieldKeys = ['fullName', 'studentId', 'email', 'phone', 'batch', 'instaPayRef', 'paymentProof'];
 
+  function moveCoreQuestion(key, dir) {
+    var list = document.getElementById('coreQuestionsSortableList');
+    var card = document.getElementById('vfCard_' + key);
+    if (!list || !card) return;
+    var cards = Array.prototype.slice.call(list.querySelectorAll('.core-q-card'));
+    var idx = cards.indexOf(card);
+    var nextIdx = idx + dir;
+    if (idx < 0 || nextIdx < 0 || nextIdx >= cards.length) return;
+    if (dir < 0) {
+      list.insertBefore(card, cards[nextIdx]);
+    } else {
+      list.insertBefore(card, cards[nextIdx].nextSibling);
+    }
+  }
+
+  function getOrderedCoreKeysFromDOM() {
+    var list = document.getElementById('coreQuestionsSortableList');
+    if (!list) return coreFieldKeys.slice();
+    return Array.prototype.slice.call(list.querySelectorAll('.core-q-card')).map(function(el) {
+      return el.getAttribute('data-core-key');
+    }).filter(Boolean);
+  }
+
   function toggleVfCardVisual(key) {
     var card = document.getElementById('vfCard_' + key);
     var showCb = document.getElementById('coreShow_' + key);
@@ -2545,18 +2639,37 @@
     var oldSettings = existing ? existing.formSettings || {} : {};
     var batchOptsRaw = (document.getElementById('coreBatchOptionsInput').value || '');
     var batchOpts = batchOptsRaw.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+
+    var orderedCore = getOrderedCoreKeysFromDOM();
+    var questionOrder = [];
+    orderedCore.forEach(function(k) {
+      var secSel = document.getElementById('coreSec_' + k);
+      var secVal = secSel ? Number(secSel.value) : ((k === 'instaPayRef' || k === 'paymentProof') ? 3 : 2);
+      questionOrder.push({ id: k, isCore: true, section: secVal });
+    });
+    customFields.forEach(function(f) {
+      questionOrder.push({ id: f.id, isCore: false, section: Number(f.section) || 2 });
+    });
+
     var out = {
       eventLogoUrl: oldSettings.eventLogoUrl || '',
       ticketTemplateStyle: oldSettings.ticketTemplateStyle || '',
       slideTemplateId: oldSettings.slideTemplateId || '',
       closedFullMessage: (document.getElementById('evtClosedFullMsg').value || '').trim(),
-      closedDeadlineMessage: (document.getElementById('evtClosedDeadlineMsg').value || '').trim()
+      closedDeadlineMessage: (document.getElementById('evtClosedDeadlineMsg').value || '').trim(),
+      step2Title: (document.getElementById('evtStep2Title').value || '').trim(),
+      step2Subtitle: (document.getElementById('evtStep2Sub').value || '').trim(),
+      step3Title: (document.getElementById('evtStep3Title').value || '').trim(),
+      step3Subtitle: (document.getElementById('evtStep3Sub').value || '').trim(),
+      questionOrder: questionOrder
     };
     coreFieldKeys.forEach(function(key) {
+      var secEl = document.getElementById('coreSec_' + key);
       out[key] = {
         label: document.getElementById('coreLabel_' + key).value.trim(),
         required: document.getElementById('coreReq_' + key).checked,
-        visible: document.getElementById('coreShow_' + key).checked
+        visible: document.getElementById('coreShow_' + key).checked,
+        section: secEl ? Number(secEl.value) : ((key === 'instaPayRef' || key === 'paymentProof') ? 3 : 2)
       };
       if (key === 'batch' && batchOpts.length) {
         out[key].options = batchOpts;
@@ -2578,6 +2691,11 @@
     };
     document.getElementById('evtClosedFullMsg').value = settings.closedFullMessage || '';
     document.getElementById('evtClosedDeadlineMsg').value = settings.closedDeadlineMessage || '';
+    document.getElementById('evtStep2Title').value = settings.step2Title || 'Student Identity & Contact';
+    document.getElementById('evtStep2Sub').value = settings.step2Subtitle || 'Each Student ID and WhatsApp number can only register once per event';
+    document.getElementById('evtStep3Title').value = settings.step3Title || 'Payment Reference & Screenshot';
+    document.getElementById('evtStep3Sub').value = settings.step3Subtitle || 'Enter your unique InstaPay Reference ID and attach your transfer receipt';
+
     var defaultBatches = ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Intern 1', 'Intern 2'];
     var batchCfg = settings.batch || {};
     document.getElementById('coreBatchOptionsInput').value = (Array.isArray(batchCfg.options) && batchCfg.options.length)
@@ -2587,11 +2705,29 @@
 
     coreFieldKeys.forEach(function(key) {
       var v = settings[key] || {};
+      var defSec = (key === 'instaPayRef' || key === 'paymentProof') ? '3' : '2';
       document.getElementById('coreLabel_' + key).value = v.label || defaults[key];
       document.getElementById('coreReq_' + key).checked = v.required !== false;
       document.getElementById('coreShow_' + key).checked = v.visible !== false;
+      var secEl = document.getElementById('coreSec_' + key);
+      if (secEl) secEl.value = String(v.section || defSec);
       toggleVfCardVisual(key);
     });
+
+    // Reorder DOM cards inside #coreQuestionsSortableList according to saved questionOrder
+    var list = document.getElementById('coreQuestionsSortableList');
+    if (list && Array.isArray(settings.questionOrder) && settings.questionOrder.length) {
+      settings.questionOrder.forEach(function(item) {
+        if (item && item.id) {
+          var card = document.getElementById('vfCard_' + item.id);
+          if (card) {
+            list.appendChild(card);
+            var secEl = document.getElementById('coreSec_' + item.id);
+            if (secEl && item.section) secEl.value = String(item.section);
+          }
+        }
+      });
+    }
   }
 
   function addField(type) {
@@ -2600,8 +2736,10 @@
     var newField = {
       id: fieldId,
       type: type,
-      label: type === 'choice' ? 'Select Option' : (type === 'image' ? 'Upload Additional Document' : 'Additional Question'),
+      label: type === 'section' ? 'Additional Information Group' : (type === 'choice' ? 'Select Option' : (type === 'image' ? 'Upload Additional Document' : 'Additional Question')),
+      subtitle: type === 'section' ? 'Please fill out the details below' : '',
       required: false,
+      section: 2,
       options: type === 'choice' ? ['Option 1', 'Option 2'] : []
     };
     customFields.push(newField);
@@ -2628,6 +2766,10 @@
     customFields.forEach(function(f) {
       var l = document.getElementById('label_' + f.id);
       if (l) f.label = l.value.trim();
+      var sub = document.getElementById('sub_' + f.id);
+      if (sub) f.subtitle = sub.value.trim();
+      var sec = document.getElementById('sec_' + f.id);
+      if (sec) f.section = Number(sec.value) || 2;
       var r = document.getElementById('req_' + f.id);
       if (r) f.required = r.checked;
       var o = document.getElementById('opts_' + f.id);
@@ -2639,7 +2781,7 @@
     var container = document.getElementById('fieldsContainer');
     container.innerHTML = '';
     if (!customFields.length) {
-      container.innerHTML = '<div id="noFieldsMsg" class="p-3 text-center rounded-3" style="background:rgba(255,255,255,0.08);color:#f5ebd6;border:1px dashed rgba(200,171,117,0.45);">No extra custom questions added yet. Click any button above to add a question to the form.</div>';
+      container.innerHTML = '<div id="noFieldsMsg" class="p-3 text-center rounded-3" style="background:rgba(255,255,255,0.08);color:#f5ebd6;border:1px dashed rgba(200,171,117,0.45);">No extra custom questions or sub-sections added yet. Click any button above to add a question or section header.</div>';
       return;
     }
 
@@ -2647,6 +2789,33 @@
       var card = document.createElement('div');
       card.className = 'vf-card';
       card.id = 'row_' + f.id;
+      var fSec = Number(f.section) === 3 ? 3 : 2;
+
+      if (f.type === 'section') {
+        card.style.background = '#fdf8f6';
+        card.style.borderLeft = '5px solid #7b1f20';
+        card.innerHTML =
+          '<div class="d-flex justify-content-between align-items-center gap-2 mb-2 flex-wrap">' +
+            '<div class="d-flex align-items-center gap-2 flex-grow-1">' +
+              '<span class="badge" style="background:#7b1f20;color:#f5ebd6;">📑 Section Header</span>' +
+              '<input type="text" class="vf-question-input" id="label_' + f.id + '" placeholder="Section Group Title (e.g. Academic Details)" value="' + escHtml(f.label) + '" />' +
+            '</div>' +
+            '<div class="d-flex align-items-center gap-2">' +
+              '<select class="form-select form-select-sm fw-semibold" id="sec_' + f.id + '" style="width:auto;font-size:0.75rem;">' +
+                '<option value="2" ' + (fSec === 2 ? 'selected' : '') + '>📂 Section 2</option>' +
+                '<option value="3" ' + (fSec === 3 ? 'selected' : '') + '>📂 Section 3</option>' +
+              '</select>' +
+              '<button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveField(\'' + f.id + '\', -1)" title="Move Up">▲</button>' +
+              '<button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveField(\'' + f.id + '\', 1)" title="Move Down">▼</button>' +
+              '<button type="button" class="btn btn-sm btn-outline-danger py-0 px-2 fw-bold" onclick="removeField(\'' + f.id + '\')">🗑️ Delete</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="vf-preview-box">' +
+            '<input type="text" class="form-control form-control-sm bg-white" id="sub_' + f.id + '" placeholder="Optional section subtitle or instructions..." value="' + escHtml(f.subtitle || '') + '" />' +
+          '</div>';
+        container.appendChild(card);
+        return;
+      }
 
       var typeBadge = f.type === 'choice'
         ? '<span class="badge bg-success-subtle text-success border">Multiple Choice</span>'
@@ -2677,7 +2846,11 @@
             typeBadge +
             '<input type="text" class="vf-question-input" id="label_' + f.id + '" placeholder="Write question title here..." value="' + escHtml(f.label) + '" />' +
           '</div>' +
-          '<div class="d-flex align-items-center gap-2">' +
+          '<div class="d-flex align-items-center gap-2 flex-wrap">' +
+            '<select class="form-select form-select-sm fw-semibold" id="sec_' + f.id + '" style="width:auto;font-size:0.75rem;">' +
+              '<option value="2" ' + (fSec === 2 ? 'selected' : '') + '>📂 Section 2</option>' +
+              '<option value="3" ' + (fSec === 3 ? 'selected' : '') + '>📂 Section 3</option>' +
+            '</select>' +
             '<label class="small fw-bold mb-0"><input class="form-check-input me-1" type="checkbox" id="req_' + f.id + '" ' + (f.required ? 'checked' : '') + ' /> Required</label>' +
             '<button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveField(\'' + f.id + '\', -1)" title="Move Up">▲</button>' +
             '<button type="button" class="btn btn-sm btn-light border py-0 px-2" onclick="moveField(\'' + f.id + '\', 1)" title="Move Down">▼</button>' +
@@ -2707,7 +2880,7 @@
     document.getElementById('evtLogoFile').value = '';
 
     customFields = (ev.customFields || []).map(function(f, idx) {
-      return { id: f.id || ('f_' + idx + '_' + Date.now()), type: f.type || 'text', label: f.label || '', required: !!f.required, options: f.options || [] };
+      return { id: f.id || ('f_' + idx + '_' + Date.now()), type: f.type || 'text', label: f.label || '', subtitle: f.subtitle || '', section: Number(f.section) || 2, required: !!f.required, options: f.options || [] };
     });
     renderCustomFields();
 
