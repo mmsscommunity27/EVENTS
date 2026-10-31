@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -471,6 +471,10 @@
     var torchEnabled = false;
     var nativeBarcodeDetector = null;
     var detectorBusy = false;
+    var lastNativeScanAt = 0;
+    var lastFallbackScanAt = 0;
+    var lastFullFrameScanAt = 0;
+    var qrCanvasContext = null;
 
     function safeStorageGet(k) {
       try { return localStorage.getItem(k) || ''; } catch (e) { return ''; }
@@ -995,56 +999,57 @@
     function scanVideoFrame() {
       if (!videoStream) return;
       var video = document.getElementById('qrVideo');
-
       if (video.readyState === video.HAVE_ENOUGH_DATA && video.videoWidth > 0) {
-        if (nativeBarcodeDetector && !detectorBusy) {
+        var now = Date.now();
+        var hasNative = !!nativeBarcodeDetector;
+        if (hasNative && !detectorBusy && now - lastNativeScanAt >= 100) {
           detectorBusy = true;
+          lastNativeScanAt = now;
           nativeBarcodeDetector.detect(video).then(function(barcodes) {
-            detectorBusy = false;
-            if (barcodes && barcodes.length > 0 && barcodes[0].rawValue) {
-              triggerDecodedCandidate(barcodes[0].rawValue);
-            }
-          }).catch(function() {
-            detectorBusy = false;
-          });
+            if (barcodes && barcodes.length > 0 && barcodes[0].rawValue) triggerDecodedCandidate(barcodes[0].rawValue);
+          }).catch(function() {}).then(function() { detectorBusy = false; });
         }
 
-        var canvas = document.getElementById('qrCanvas');
-        var ctx = canvas.getContext('2d', { willReadFrequently: true });
-        var vw = video.videoWidth;
-        var vh = video.videoHeight;
-
-        var cropSize = Math.min(vw, vh) * 0.72;
-        var sx = (vw - cropSize) / 2;
-        var sy = (vh - cropSize) / 2;
-        var targetDim = Math.min(520, Math.round(cropSize));
-        canvas.width = targetDim;
-        canvas.height = targetDim;
-        ctx.drawImage(video, sx, sy, cropSize, cropSize, 0, 0, targetDim, targetDim);
-        var centerData = ctx.getImageData(0, 0, targetDim, targetDim);
-
-        if (typeof jsQR === 'function') {
-          var code = jsQR(centerData.data, centerData.width, centerData.height, { inversionAttempts: 'attemptBoth' });
+        // Keep the JS fallback off the hot path when the browser's native scanner is available.
+        var fallbackInterval = hasNative ? 900 : 220;
+        if (typeof jsQR === 'function' && now - lastFallbackScanAt >= fallbackInterval) {
+          lastFallbackScanAt = now;
+          var canvas = document.getElementById('qrCanvas');
+          var ctx = qrCanvasContext || (qrCanvasContext = canvas.getContext('2d', { willReadFrequently: true }));
+          var vw = video.videoWidth;
+          var vh = video.videoHeight;
+          var cropSize = Math.min(vw, vh) * 0.72;
+          var sx = (vw - cropSize) / 2;
+          var sy = (vh - cropSize) / 2;
+          var targetDim = Math.min(420, Math.round(cropSize));
+          if (canvas.width !== targetDim || canvas.height !== targetDim) {
+            canvas.width = targetDim;
+            canvas.height = targetDim;
+          }
+          ctx.drawImage(video, sx, sy, cropSize, cropSize, 0, 0, targetDim, targetDim);
+          var centerData = ctx.getImageData(0, 0, targetDim, targetDim);
+          var code = jsQR(centerData.data, centerData.width, centerData.height, { inversionAttempts: 'dontInvert' });
           if (code && code.data) {
             triggerDecodedCandidate(code.data);
-          } else {
-            var scale = Math.min(1, 640 / vw);
+          } else if (now - lastFullFrameScanAt >= 1500) {
+            // Rare full-frame retry catches QR codes held outside the guide without slowing every scan.
+            lastFullFrameScanAt = now;
+            var scale = Math.min(1, 480 / vw);
             var fw = Math.round(vw * scale);
             var fh = Math.round(vh * scale);
-            canvas.width = fw;
-            canvas.height = fh;
+            if (canvas.width !== fw || canvas.height !== fh) {
+              canvas.width = fw;
+              canvas.height = fh;
+            }
             ctx.drawImage(video, 0, 0, fw, fh);
             var fullData = ctx.getImageData(0, 0, fw, fh);
             var codeFull = jsQR(fullData.data, fullData.width, fullData.height, { inversionAttempts: 'attemptBoth' });
-            if (codeFull && codeFull.data) {
-              triggerDecodedCandidate(codeFull.data);
-            }
+            if (codeFull && codeFull.data) triggerDecodedCandidate(codeFull.data);
           }
         }
       }
       scanAnimFrame = requestAnimationFrame(scanVideoFrame);
     }
-
     // ── BUTTON 1 & BUTTON 2: FROM PDF / PHOTO & CAMERA SNAPSHOT ──────────────────────
     document.getElementById('pdfOrPhotoInput').addEventListener('change', function(e) {
       var file = e.target.files && e.target.files[0];
@@ -1397,4 +1402,4 @@
     resumeSession();
   </script>
 </body>
-</html> 
+</html>
