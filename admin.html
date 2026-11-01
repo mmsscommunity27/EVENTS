@@ -890,7 +890,7 @@
                 <div class="form-check form-switch mb-3">
                   <input class="form-check-input" type="checkbox" id="preventDuplicate" checked disabled />
                   <label class="form-check-label fw-bold text-success" for="preventDuplicate">
-                    🔒 Strict Single-Dispatch Protection Active: Attendees who already received a QR code are automatically locked so no QR code is ever sent twice to the same person.
+                    🔒 Duplicate protection is active per channel: successful email or WhatsApp deliveries are skipped on retry; failed channels can be sent again.
                   </label>
                 </div>
 
@@ -901,7 +901,7 @@
                         <input class="form-check-input" type="checkbox" id="sendEmail" checked />
                         <label class="form-check-label fw-bold" for="sendEmail">📧 Send Official Ticket PDF &amp; MMSS Logo Email</label>
                       </div>
-                      <div class="form-text mt-1">Sends executive HTML email with embedded MMSS Logo + attached PDF Ticket.</div>
+                      <div class="form-text mt-1">Sends the ticket by email. If it succeeds, a later retry will not send it again.</div>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -910,7 +910,7 @@
                         <input class="form-check-input" type="checkbox" id="enableWhatsApp" checked onchange="toggleWhatsApp()" />
                         <label class="form-check-label fw-bold text-success" for="enableWhatsApp">💬 Send Official PDF Ticket &amp; QR by WhatsApp (WAAPI)</label>
                       </div>
-                      <div class="form-text mt-1 mb-2">Sends the official PDF Ticket file + QR Code directly to the student's WhatsApp.</div>
+                      <div class="form-text mt-1 mb-2">Sends the ticket by WhatsApp. Failed WhatsApp sends can be retried without repeating a successful email.</div>
                       <select class="form-select form-select-sm fw-semibold border-success" id="waMediaModeSelect">
                         <option value="pdf_and_qr" selected>📄 + 🖼️ Send Both Official PDF Ticket &amp; QR Image on WhatsApp</option>
                         <option value="pdf_only">📄 Send Official PDF Ticket File Only on WhatsApp</option>
@@ -3530,21 +3530,27 @@
     body.innerHTML = rows.map(function(r) {
       var status = String(r.Ticket_Status || 'Pending');
       var alreadySent = (status === 'Dispatched' || status === 'Checked In' || !!r.Ticket_Dispatched_Timestamp);
-      var eligible = (status === 'Verified' && !alreadySent);
+      var emailState = String(r.Email_Ticket_Status || '').trim() || (alreadySent ? (r.WhatsApp_Sent_By ? 'Unknown' : 'Sent') : 'Not sent');
+      var waState = String(r.WhatsApp_Ticket_Status || '').trim() || (r.WhatsApp_Sent_By ? 'Sent' : (alreadySent ? 'Unknown' : 'Not sent'));
+      var canRetryChannel = emailState !== 'Sent' || waState !== 'Sent';
+      var paymentEligible = status === 'Verified' || status === 'Dispatched' || status === 'Checked In';
+      var eligible = paymentEligible && canRetryChannel;
       if (!eligible && selectedRecipientRows[String(r.rowIndex)]) {
         delete selectedRecipientRows[String(r.rowIndex)];
       }
       var checked = !!selectedRecipientRows[String(r.rowIndex)];
       var sentViaBadge = r.WhatsApp_Sent_By ? '<div class="text-muted" style="font-size:0.72rem;">📱 ' + escHtml(r.WhatsApp_Sent_By) + '</div>' : '';
+      var deliveryDetail = 'Email: ' + emailState + (r.Email_Ticket_Last_Error ? ' — ' + r.Email_Ticket_Last_Error : '') + ' | WhatsApp: ' + waState + (r.WhatsApp_Ticket_Last_Error ? ' — ' + r.WhatsApp_Ticket_Last_Error : '');
+      var channelStateBadge = '<div class="text-muted" title="' + escHtml(deliveryDetail) + '" style="font-size:0.72rem;">📧 ' + escHtml(emailState) + ' · 💬 ' + escHtml(waState) + '</div>';
       var studentIdBadge = r.Student_ID ? '<div class="text-muted font-monospace" style="font-size:0.72rem;">ID: ' + escHtml(r.Student_ID) + '</div>' : '';
-      var lockHint = alreadySent ? '🔒 QR Already Sent (Locked against duplicate send)' : 'Ticket sending is available after payment verification';
+      var lockHint = !paymentEligible ? 'Ticket sending is available after payment verification' : 'Both delivery channels are already marked Sent';
       return '<tr>' +
         '<td><input class="recipient-check" type="checkbox" data-row="' + Number(r.rowIndex) + '" ' + (eligible ? '' : 'disabled title="' + lockHint + '" ') + (checked ? 'checked ' : '') + 'onchange="toggleRecipientRow(this)" /></td>' +
-        '<td><strong>' + escHtml(r.Full_Name || '—') + '</strong>' + studentIdBadge + sentViaBadge + '</td>' +
+        '<td><strong>' + escHtml(r.Full_Name || '—') + '</strong>' + studentIdBadge + channelStateBadge + sentViaBadge + '</td>' +
         '<td><code>' + escHtml(r.Serial_ID || '—') + '</code></td>' +
         '<td>' + escHtml(r.Email || '—') + '</td>' +
         '<td>' + escHtml(r.Phone || '—') + '</td>' +
-        '<td><span class="status-badge status-' + escHtml(status.toLowerCase().replace(/[^a-z]/g, '')) + '">' + (alreadySent ? ('🔒 ' + escHtml(status)) : escHtml(status)) + '</span></td>' +
+        '<td><span class="status-badge status-' + escHtml(status.toLowerCase().replace(/[^a-z]/g, '')) + '">' + ((!canRetryChannel && alreadySent) ? ('🔒 ' + escHtml(status)) : escHtml(status)) + '</span></td>' +
       '</tr>';
     }).join('');
     updateRecipientSelectionCount();
@@ -3764,6 +3770,7 @@
       '<div class="mb-2">Ready to dispatch tickets to <strong>' + selectedRows.length + '</strong> selected attendee(s):</div>' +
       '<ul class="small mb-0">' +
         '<li><strong>Delivery Channels:</strong> ' + (sendEmail ? '📧 Email PDF ' : '') + (sendWhatsApp ? ' + 💬 WhatsApp QR' : '') + '</li>' +
+        '<li>Only channels without a recorded successful delivery will be sent; successful channels will be skipped on retry.</li>' +
         (sendWhatsApp ? '<li><strong>WhatsApp Sender:</strong> <span class="text-primary fw-bold">' + escHtml(senderSummary) + '</span></li>' : '') +
         (sendWhatsApp && selectedRows.length > 1 ? '<li><strong>Anti-Ban Protection:</strong> Random delay (' + minDelay + '–' + maxDelay + ' sec) between messages + Dynamic Spintax variation.</li>' : '') +
       '</ul>',
